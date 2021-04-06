@@ -26,8 +26,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-	compile 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 test {
