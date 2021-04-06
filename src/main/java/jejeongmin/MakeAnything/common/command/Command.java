@@ -1,4 +1,5 @@
 package jejeongmin.MakeAnything.common.command;
 
-public class Command {
+public interface Command {
+    public void execute();
 }
