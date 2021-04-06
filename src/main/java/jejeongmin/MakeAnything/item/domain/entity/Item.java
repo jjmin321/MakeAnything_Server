@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Setter
 public class Item {
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
 
@@ -19,21 +18,18 @@ public class Item {
     @JoinColumn(columnDefinition = "user_idx")
     private User user;
 
-    @Column(name = "name", nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "description", nullable = false)
+    @Column(nullable = false)
     private String description;
 
-    @Column(name = "price", nullable = false)
+    @Column(nullable = false)
     private Integer price;
 
-    @Column(name = "thumbnail", nullable = false)
+    @Column(length = 50, nullable = false)
     private String thumbnail;
 
-    @Column(name = "type", nullable = false)
+    @Column(length = 10, nullable = false)
     private String type;
-
-    @Column(name = "file")
-    private String file;
 }
