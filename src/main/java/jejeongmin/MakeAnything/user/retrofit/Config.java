@@ -3,7 +3,7 @@ package jejeongmin.MakeAnything.user.retrofit;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HttpClient {
+public class DodamClient {
 
     private static Retrofit retrofit;
 

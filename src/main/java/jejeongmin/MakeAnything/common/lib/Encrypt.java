@@ -25,9 +25,10 @@ public class Encrypt {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(data.getBytes());
+            byte[] byteData = md.digest();
             StringBuilder sb = new StringBuilder();
-            for (byte b: md.digest()) {
-                sb.append(Integer.toHexString(0xff & b));
+            for (byte byteDatum : byteData) {
+                sb.append(Integer.toString((byteDatum & 0xff) + 0x100, 16).substring(1));
             }
             return sb.toString();
         } catch (Exception e) {
