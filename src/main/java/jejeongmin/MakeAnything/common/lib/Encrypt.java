@@ -1,9 +1,10 @@
 package jejeongmin.MakeAnything.common.lib;
 
 import jejeongmin.MakeAnything.common.exception.EncryptException;
-
+import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 
+@Component
 public class Encrypt {
 
     public String sha256(String data) throws EncryptException {
