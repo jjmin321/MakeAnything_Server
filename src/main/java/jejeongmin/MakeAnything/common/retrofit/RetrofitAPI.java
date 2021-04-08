@@ -1,10 +1,10 @@
-package jejeongmin.MakeAnything.user.retrofit;
+package jejeongmin.MakeAnything.common.retrofit;
 
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
 import jejeongmin.MakeAnything.user.domain.dto.UserDto;
-import jejeongmin.MakeAnything.user.retrofit.vo.DodamTokenVo;
-import jejeongmin.MakeAnything.user.retrofit.vo.DodamUserDataVo;
-import jejeongmin.MakeAnything.user.retrofit.vo.DodamUserVo;
+import jejeongmin.MakeAnything.common.retrofit.vo.DodamTokenVo;
+import jejeongmin.MakeAnything.common.retrofit.vo.DodamUserDataVo;
+import jejeongmin.MakeAnything.common.retrofit.vo.DodamUserVo;
 import retrofit2.Call;
 import retrofit2.http.*;
 

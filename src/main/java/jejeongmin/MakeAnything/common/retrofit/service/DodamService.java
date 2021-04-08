@@ -1,12 +1,12 @@
-package jejeongmin.MakeAnything.user.retrofit.service;
+package jejeongmin.MakeAnything.common.retrofit.service;
 
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
 import jejeongmin.MakeAnything.user.domain.dto.UserDto;
-import jejeongmin.MakeAnything.user.retrofit.RetrofitAPI;
-import jejeongmin.MakeAnything.user.retrofit.RetrofitConfig;
-import jejeongmin.MakeAnything.user.retrofit.vo.DodamTokenVo;
-import jejeongmin.MakeAnything.user.retrofit.vo.DodamUserDataVo;
-import jejeongmin.MakeAnything.user.retrofit.vo.DodamUserVo;
+import jejeongmin.MakeAnything.common.retrofit.RetrofitAPI;
+import jejeongmin.MakeAnything.common.retrofit.RetrofitConfig;
+import jejeongmin.MakeAnything.common.retrofit.vo.DodamTokenVo;
+import jejeongmin.MakeAnything.common.retrofit.vo.DodamUserDataVo;
+import jejeongmin.MakeAnything.common.retrofit.vo.DodamUserVo;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;

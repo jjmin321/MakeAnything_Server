@@ -1,4 +1,4 @@
-package jejeongmin.MakeAnything.user.retrofit;
+package jejeongmin.MakeAnything.common.retrofit;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
