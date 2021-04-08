@@ -7,6 +7,7 @@ import jejeongmin.MakeAnything.common.retrofit.RetrofitConfig;
 import jejeongmin.MakeAnything.common.retrofit.vo.DodamTokenVo;
 import jejeongmin.MakeAnything.common.retrofit.vo.DodamUserDataVo;
 import jejeongmin.MakeAnything.common.retrofit.vo.DodamUserVo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -14,9 +15,19 @@ import retrofit2.Response;
 @Component
 public class DodamService {
 
+    @Value("${dodam.api-key}")
+    private String dodamApiKey;
+
     private RetrofitAPI api = RetrofitConfig.getRetrofit().create(RetrofitAPI.class);
 
-    public String authLogin(UserDto userDto, String dodamApiKey) throws Exception {
+    /**
+     * @param userDto - DodamDodam ID , DodamDodam PW
+     * @return token - DodamDodam Token
+     * @throws Exception - An Exception occurred from DodamDodam API
+     */
+
+    public String authLogin(UserDto userDto) throws Exception {
+
         Call<ResponseData<DodamTokenVo>> call = api.dodamAuthLogin(userDto, dodamApiKey);
         try {
             Response<ResponseData<DodamTokenVo>> response = call.execute();
@@ -29,6 +40,12 @@ public class DodamService {
             throw e;
         }
     }
+
+    /**
+     * @param token - DodamDodam Token
+     * @return DodamUserData - An User Data from DodamDodam
+     * @throws Exception - An Exception occurred from DodamDodam API
+     */
 
     public DodamUserDataVo getUserInfo(String token) throws Exception {
         Call<ResponseData<DodamUserVo<DodamUserDataVo>>> call = api.dodamGetUserInfo(token);

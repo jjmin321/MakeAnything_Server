@@ -18,6 +18,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * @param userDto - DodamDodam ID, PW
+     * @return response - Status Code, Message, JSON or Exception Method
+     * @throws Exception - An Exception occurred in UserService Layer
+     */
+
     @GetMapping("/signIn")
     public Response signIn(@Valid @RequestBody UserDto userDto) throws Exception {
         try {

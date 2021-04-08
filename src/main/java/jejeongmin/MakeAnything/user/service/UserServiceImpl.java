@@ -16,9 +16,6 @@ import java.util.Calendar;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Value("${dodam.api-key}")
-    private String dodamApiKey;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -30,11 +27,17 @@ public class UserServiceImpl implements UserService {
 
     private ModelMapper modelMapper = new ModelMapper();
 
+    /**
+     * @param userDto - ID and PW
+     * @return User - an User Record
+     * @throws Exception - An Exception occurred in DodamService or UserRepository Layer
+     */
+
     @Override
     public User signIn(UserDto userDto) throws Exception {
         try {
             userDto.setPw(encrypt.sha512(userDto.getPw()));
-            String dodamToken = dodamService.authLogin(userDto, dodamApiKey);
+            String dodamToken = dodamService.authLogin(userDto);
             DodamUserDataVo dodamUserDataVo = dodamService.getUserInfo(dodamToken);
             User mappedUser = modelMapper.map(dodamUserDataVo, User.class);
             User createdUser = userRepository.save(mappedUser);

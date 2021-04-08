@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class GlobalExceptionHandler {
 
+    /**
+     * All Methods
+     * @param e - Exception Information
+     * @return - ResponseError with Status Code, Exception Message, Exception Kind
+     */
+
     @ExceptionHandler(EncryptException.class)
     public Response handleEncryptException(EncryptException e) {
         return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), "EncryptException");
