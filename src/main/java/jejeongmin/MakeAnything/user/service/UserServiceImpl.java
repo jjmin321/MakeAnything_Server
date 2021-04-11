@@ -7,13 +7,11 @@ import jejeongmin.MakeAnything.user.domain.dto.UserDto;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import jejeongmin.MakeAnything.user.domain.repository.UserRepository;
 import jejeongmin.MakeAnything.common.retrofit.service.DodamService;
-import jejeongmin.MakeAnything.common.retrofit.vo.DodamUserDataVo;
+import jejeongmin.MakeAnything.common.vo.dodam.DodamUserDataVo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 

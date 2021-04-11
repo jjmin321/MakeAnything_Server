@@ -1,4 +1,4 @@
-package jejeongmin.MakeAnything.common.retrofit.vo;
+package jejeongmin.MakeAnything.common.vo.dodam;
 
 import lombok.Getter;
 
