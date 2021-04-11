@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DodamService dodamService;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     /**
      * @param userDto - ID and PW
