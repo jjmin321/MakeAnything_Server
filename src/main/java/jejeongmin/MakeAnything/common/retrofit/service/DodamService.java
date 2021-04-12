@@ -18,7 +18,7 @@ public class DodamService {
     @Value("${dodam.api-key}")
     private String dodamApiKey;
 
-    private RetrofitAPI api = RetrofitConfig.getRetrofit().create(RetrofitAPI.class);
+    private final RetrofitAPI api = RetrofitConfig.getRetrofit().create(RetrofitAPI.class);
 
     /**
      * @param userDto - DodamDodam ID , DodamDodam PW

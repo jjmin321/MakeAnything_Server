@@ -21,7 +21,7 @@ public class Jwt {
     @Value("${jwt.secret.refresh}")
     private String secretRefreshKey;
 
-    private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+    private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     /**
      * @param user - An User want to create Token

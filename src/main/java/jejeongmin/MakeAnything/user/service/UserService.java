@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface UserService {
 
-    public Map<String, String> signIn(UserDto userDto) throws Exception;
+    Map<String, String> signIn(UserDto userDto) throws Exception;
 
 }
