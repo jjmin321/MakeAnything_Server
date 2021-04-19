@@ -28,7 +28,7 @@ public class UserController {
      * @throws Exception - An Exception occurred in UserService Layer
      */
 
-    @GetMapping("/signIn")
+    @PostMapping("/signIn")
     public Response signIn(@Valid @RequestBody UserDto userDto) throws Exception {
         try {
             Map<String, String> jsonWebToken = userService.signIn(userDto);
