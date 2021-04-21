@@ -13,7 +13,7 @@
 
 대구소프트웨어고등학교 학생들이 함께 사용할 수 있는 교내 마켓 서비스입니다.
 
-서비스는 3가지로 분리되어 각각 개발됩니다
+서비스는 3가지로 각각 관심사가 분리되어 개발됩니다
 - Item (물품) 
 - User (유저)
 - Common (공용)
@@ -24,8 +24,9 @@
 
 ```
 item
-    ㄴ domain
-        ㄴ entity.java
+    ㄴ controller - 클라이언트의 요구사항
+    ㄴ service - 요구사항의 비즈니스 로직
+    ㄴ domain - 데이터베이스 관련 
 ```
 
 ### 유저
@@ -34,15 +35,9 @@ item
 
 ```
 user
-    ㄴ controller
-        ㄴ UserController.java   
-    ㄴ service
-        ㄴ UserService.java
-        ㄴ UserServiceImpl.java
-    ㄴ domain
-        ㄴ dto
-        ㄴ entity
-        ㄴ repository
+    ㄴ controller - 클라이언트의 요구사항
+    ㄴ service - 요구사항의 비즈니스 로직
+    ㄴ domain - 데이터베이스 관련 
 ```
 
 ### 공용 
@@ -51,31 +46,15 @@ user
 
 ```
 common
-    ㄴ configuration
-        ㄴ ModelMapperConfiguration.java
-    ㄴ enums
-        ㄴ JwtEnum.java
-    ㄴ exception
-        ㄴ EncryptException.java
-    ㄴ handler
-        ㄴ GlobalExceptionHandler.java
-    ㄴ lib 
-        ㄴ Encrypt.java
-        ㄴ Jwt.java
-    ㄴ retrofit
-        ㄴ service
-            ㄴ DodamService.java
-        ㄴ RetrofitAPI.java
-        ㄴ RetrofitConfig.java
-    ㄴ vo
-        ㄴ dodam
-            ㄴ DodamTokenVo.java
-            ㄴ DodamUserVo.java
-            ㄴ DodamUserDataVo.java
-        ㄴ http
-            ㄴ Response.java
-            ㄴ ResponseData.java
-            ㄴ ResponseError.java
+    ㄴ annotation - 사용자 정의 어노테이션
+    ㄴ aspect - AOP를 위한 Advice 클래스
+    ㄴ configuration - IOC & DI를 위한 Bean 생성, Configurer 구현체
+    ㄴ enums - 코드 단순화, 가독성 등을 위한 열거형 타입 
+    ㄴ exception - 명확한 에러 생성을 위한 사용자 정의 에러  
+    ㄴ handler - 명확한 에러 처리를 위한 에러 핸들러 
+    ㄴ lib - 비즈니스 로직이 아닌 재사용성을 위한  
+    ㄴ retrofit - 교내 도담도담 서비스와 통신을 위한 클래스
+    ㄴ vo - 초기화 후 Getter을 통해 값만을 사용하기 위한 클래스
 ```
 
 # 2021년 5월 말 배포 예정으로 개발 중입니다 
