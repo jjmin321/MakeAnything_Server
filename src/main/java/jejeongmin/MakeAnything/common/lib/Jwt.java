@@ -91,9 +91,7 @@ public class Jwt {
 
             Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretAccessKey))
                     .parseClaimsJws(token).getBody();
-
-            Optional<User> user = userRepository.findById((Integer) claims.get("id"));
-
+            Optional<User> user = userRepository.findById((String) claims.get("id"));
             if (!user.isPresent()) {
                 throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "회원 없음");
             }
