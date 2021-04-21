@@ -3,8 +3,14 @@ package jejeongmin.MakeAnything.common.lib;
 import io.jsonwebtoken.*;
 import jejeongmin.MakeAnything.common.enums.JwtEnum;
 import jejeongmin.MakeAnything.user.domain.entity.User;
+import jejeongmin.MakeAnything.user.domain.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -22,6 +28,9 @@ public class Jwt {
     private String secretRefreshKey;
 
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * @param user - An User want to create Token
@@ -64,6 +73,71 @@ public class Jwt {
                 .signWith(signatureAlgorithm, signingKey);
 
         return builder.compact();
+    }
+
+    /**
+     * 토큰 검증
+     * @param token - A AccessToken get from client
+     * @return User - A Client User
+     */
+    public User validateToken(String token) {
+        try {
+            if (ObjectUtils.isEmpty(token)) {
+                throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "권한 없음.");
+            }
+
+            Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretAccessKey))
+                    .parseClaimsJws(token).getBody();
+
+            Optional<User> user = userRepository.findById((Integer) claims.get("id"));
+
+            if (!user.isPresent()) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "회원 없음");
+            }
+
+            return user.get();
+        } catch (HttpClientErrorException e) {
+            throw e;
+        } catch (ExpiredJwtException e) {
+            throw new HttpClientErrorException(HttpStatus.GONE, "토큰 만료.");
+        } catch (SignatureException | MalformedJwtException e) {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "토큰 위조.");
+        } catch (IllegalArgumentException e) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "토큰 없음.");
+        } catch (Exception e) {
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류.");
+        }
+    }
+
+    /**
+     * 토큰 갱신
+     * @param refreshToken - A RefreshToken get from client
+     * @return accessToken - New AccessToken send to client
+     */
+    public String refresh(String refreshToken) {
+        try {
+            Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretRefreshKey))
+                    .parseClaimsJws(refreshToken).getBody();
+
+            Optional<User> user = userRepository.findById((Integer) claims.get("id"));
+
+            if (!user.isPresent()) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "회원 없음");
+            }
+
+            return createToken(user.get(), JwtEnum.ACCESS);
+        } catch (HttpClientErrorException e) {
+            throw e;
+        } catch (ExpiredJwtException e) {
+            e.printStackTrace();
+            throw new HttpClientErrorException(HttpStatus.GONE, "토큰 만료.");
+        } catch (SignatureException | MalformedJwtException e) {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "토큰 위조.");
+        } catch (IllegalArgumentException e) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "토큰 없음.");
+        } catch (Exception e) {
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류.");
+        }
     }
 
 }
