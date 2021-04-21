@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import jejeongmin.MakeAnything.common.enums.JwtEnum;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import jejeongmin.MakeAnything.user.domain.repository.UserRepository;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.*;
@@ -80,6 +82,7 @@ public class Jwt {
      * @param token - A AccessToken get from client
      * @return User - A Client User
      */
+
     public User validateToken(String token) {
         try {
             if (ObjectUtils.isEmpty(token)) {
@@ -114,6 +117,7 @@ public class Jwt {
      * @param refreshToken - A RefreshToken get from client
      * @return accessToken - New AccessToken send to client
      */
+
     public String refresh(String refreshToken) {
         try {
             Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretRefreshKey))
@@ -138,6 +142,24 @@ public class Jwt {
         } catch (Exception e) {
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류.");
         }
+    }
+
+    /**
+     * 토큰 추출
+     * @param request - HttpServletRequest from client
+     * @return token - A Token from request header
+     */
+
+    public String extract(HttpServletRequest request, String type) {
+        Enumeration<String> headers = request.getHeaders("Authorization");
+        while (headers.hasMoreElements()) {
+            String value = headers.nextElement();
+            if (value.toLowerCase().startsWith(type.toLowerCase())) {
+                return value.substring(type.length()).trim();
+            }
+        }
+
+        return Strings.EMPTY;
     }
 
 }
