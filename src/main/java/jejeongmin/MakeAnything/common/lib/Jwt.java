@@ -2,17 +2,13 @@ package jejeongmin.MakeAnything.common.lib;
 
 import io.jsonwebtoken.*;
 import jejeongmin.MakeAnything.common.enums.JwtEnum;
+import jejeongmin.MakeAnything.common.exception.AuthorizationException;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import jejeongmin.MakeAnything.user.domain.repository.UserRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
@@ -84,30 +80,10 @@ public class Jwt {
      */
 
     public User validateToken(String token) {
-        try {
-            if (ObjectUtils.isEmpty(token)) {
-                throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "권한 없음.");
-            }
-
-            Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretAccessKey))
-                    .parseClaimsJws(token).getBody();
-            Optional<User> user = userRepository.findById((String) claims.get("id"));
-            if (!user.isPresent()) {
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "회원 없음");
-            }
-
-            return user.get();
-        } catch (HttpClientErrorException e) {
-            throw e;
-        } catch (ExpiredJwtException e) {
-            throw new HttpClientErrorException(HttpStatus.GONE, "토큰 만료.");
-        } catch (SignatureException | MalformedJwtException e) {
-            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "토큰 위조.");
-        } catch (IllegalArgumentException e) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "토큰 없음.");
-        } catch (Exception e) {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류.");
-        }
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretAccessKey))
+                .parseClaimsJws(token).getBody();
+        Optional<User> user = userRepository.findById((String) claims.get("id"));
+        return user.get();
     }
 
     /**
@@ -117,30 +93,13 @@ public class Jwt {
      */
 
     public String refresh(String refreshToken) {
-        try {
-            System.out.println("hi"+ refreshToken);
-            Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretRefreshKey))
-                    .parseClaimsJws(refreshToken).getBody();
-
-            Optional<User> user = userRepository.findById((String) claims.get("id"));
-
-            if (!user.isPresent()) {
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "회원 없음");
-            }
-
-            return createToken(user.get(), JwtEnum.ACCESS);
-        } catch (HttpClientErrorException e) {
-            throw e;
-        } catch (ExpiredJwtException e) {
-            e.printStackTrace();
-            throw new HttpClientErrorException(HttpStatus.GONE, "토큰 만료.");
-        } catch (SignatureException | MalformedJwtException e) {
-            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "토큰 위조.");
-        } catch (IllegalArgumentException e) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "토큰 없음.");
-        } catch (Exception e) {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류.");
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretRefreshKey))
+                .parseClaimsJws(refreshToken).getBody();
+        Optional<User> user = userRepository.findById((String) claims.get("id"));
+        if (!user.isPresent()) {
+            throw new AuthorizationException("유저 정보가 없음");
         }
+        return createToken(user.get(), JwtEnum.ACCESS);
     }
 
     /**
