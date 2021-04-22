@@ -53,9 +53,14 @@ public class UserController {
         return new ResponseData<User>(HttpStatus.OK, "내 정보 조회 성공", user);
     }
 
+    /**
+     * @param refreshToken - A RefreshToken
+     * @return response - An AccessToken
+     */
+
     @GetMapping("/token")
     public Response token(@RequestParam String refreshToken) {
-        String accessToken = jwt.refresh(refreshToken); // refresh 에서 에러 처리하는 것을 수정 예정
+        String accessToken = jwt.refresh(refreshToken);
         return new ResponseData<String>(HttpStatus.OK, "토큰 갱신 성공", accessToken);
     }
 
