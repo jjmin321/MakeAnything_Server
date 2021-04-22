@@ -1,6 +1,6 @@
 package jejeongmin.MakeAnything.common.exception;
 
-public class EncryptException extends Exception {
+public class EncryptException extends RuntimeException {
 
     /**
      * @param a - Exception Message

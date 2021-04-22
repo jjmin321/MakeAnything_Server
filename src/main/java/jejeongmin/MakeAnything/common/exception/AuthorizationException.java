@@ -1,6 +1,6 @@
 package jejeongmin.MakeAnything.common.exception;
 
-public class AuthorizationException extends Exception {
+public class AuthorizationException extends RuntimeException {
 
     /**
      * @param a - Exception Message
