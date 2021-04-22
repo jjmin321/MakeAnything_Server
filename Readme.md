@@ -47,7 +47,7 @@ user
 ```
 common
     ㄴ annotation - 사용자 정의 어노테이션
-    ㄴ aspect - AOP를 위한 Advice 클래스
+    ㄴ aspect - 여러 객체에 계층으로 적용될 공통 관심사항
     ㄴ configuration - IOC & DI를 위한 Bean 생성, Configurer 구현체
     ㄴ enums - 코드 단순화, 가독성 등을 위한 열거형 타입 
     ㄴ exception - 명확한 에러 생성을 위한 사용자 정의 에러  
@@ -56,5 +56,9 @@ common
     ㄴ retrofit - 교내 도담도담 서비스와 통신을 위한 모듈
     ㄴ vo - 초기화 후 Getter을 통해 값만을 사용하기 위한 오브젝트
 ```
+
+
+### 계층 구조 
+
 
 # 2021년 5월 말 배포 예정으로 개발 중입니다 
