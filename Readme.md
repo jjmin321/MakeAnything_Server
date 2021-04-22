@@ -59,6 +59,11 @@ common
 
 
 ### 계층 구조 
+기본적인 구조는 3계층(Controller, Service, Repository)으로 이루어집니다<br>
+HTTP Request에 따라 특정 처리가 필요할 때 Interceptor 계층이 추가될 수 있습니다<br>
+여러 객체에서 공통 관심사항이 되는 코드가 필요할 때 Advice 계층이 추가될 수 있습니다<br>
+DTO를 사용하여 계층 간 데이터를 교환하고, VO를 사용하여 Response 등을 생성합니다.
 
+![image](https://user-images.githubusercontent.com/52072077/115644019-cc010300-a358-11eb-994f-f4c773d169a8.png)
 
 # 2021년 5월 말 배포 예정으로 개발 중입니다 
