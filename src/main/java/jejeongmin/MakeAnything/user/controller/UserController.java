@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -55,7 +54,7 @@ public class UserController {
 
     /**
      * @param refreshToken - A RefreshToken
-     * @return response - An AccessToken
+     * @return response - Status Code, Message, AccessToken
      */
 
     @GetMapping("/token")
