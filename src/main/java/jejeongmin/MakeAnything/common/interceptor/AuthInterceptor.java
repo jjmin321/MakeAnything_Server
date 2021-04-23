@@ -16,6 +16,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+
+        if (request.getMethod().equals("OPTIONS")) return true;
+
         String token = jwt.extract(request, "Bearer");
         User user = jwt.validateToken(token);
         request.setAttribute("user", user);
