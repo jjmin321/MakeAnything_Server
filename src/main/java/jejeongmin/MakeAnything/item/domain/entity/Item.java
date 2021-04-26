@@ -14,8 +14,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(columnDefinition = "user_idx")
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(columnDefinition = "user_id")
     private User user;
 
     @Column(length = 50, nullable = false, unique = true)
