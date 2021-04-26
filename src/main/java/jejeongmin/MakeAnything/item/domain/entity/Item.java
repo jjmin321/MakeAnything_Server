@@ -15,7 +15,7 @@ public class Item {
     private Integer idx;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(columnDefinition = "user_id")
+    @JoinColumn(columnDefinition = "id")
     private User user;
 
     @Column(length = 50, nullable = false, unique = true)
