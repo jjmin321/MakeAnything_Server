@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.io.IOException;
+
 @ControllerAdvice
 @ResponseBody
 public class GlobalExceptionHandler {
@@ -62,6 +64,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FileIsEmptyException.class)
     public Response handleFileIsEmptyException(FileIsEmptyException e) {
         return new ResponseError(HttpStatus.NOT_ACCEPTABLE, "파일이 제공되지 않아 요청을 수행할 수 없습니다", "FileIsEmptyException");
+    }
+
+    @ExceptionHandler(IOException.class)
+    public Response handleIOException(IOException e) {
+        return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, "파일을 읽는 과정에서 오류가 발생했습니다", "IOException");
     }
 
 }

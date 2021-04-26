@@ -1,5 +1,6 @@
 package jejeongmin.MakeAnything.common.lib;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+@Component
 public class File {
 
     public String uploadFile(MultipartFile file) throws IOException {
