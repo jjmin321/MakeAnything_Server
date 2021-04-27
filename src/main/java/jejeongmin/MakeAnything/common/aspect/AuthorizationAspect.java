@@ -15,7 +15,7 @@ public class AuthorizationAspect {
     public void authorizationCheck() {}
 
     @Before("authorizationCheck() && args(request)")
-    public boolean isExist(HttpServletRequest request) throws AuthorizationException {
+    public boolean methodAuthorizationCheck(HttpServletRequest request) throws AuthorizationException {
         if (request.getAttribute("user") == null) {
             throw new AuthorizationException("유저 정보가 없음");
         }
