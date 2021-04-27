@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -25,13 +26,9 @@ public class UserController {
     private Jwt jwt;
 
     @PostMapping("/signIn")
-    public Response signIn(@Valid @RequestBody UserDto userDto) throws Exception {
-        try {
-            Map<String, String> jsonWebToken = userService.signIn(userDto);
-            return new ResponseData<Object>(HttpStatus.OK, "로그인 성공", jsonWebToken);
-        } catch (Exception e) {
-            throw e;
-        }
+    public Response signIn(@Valid @RequestBody UserDto userDto) throws IOException {
+        Map<String, String> jsonWebToken = userService.signIn(userDto);
+        return new ResponseData<Object>(HttpStatus.OK, "로그인 성공", jsonWebToken);
     }
 
     @AuthorizationCheck

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import java.io.IOException;
+
 @Component
 public class DodamService {
 
@@ -20,32 +22,23 @@ public class DodamService {
 
     private final RetrofitAPI api = RetrofitConfig.getRetrofit().create(RetrofitAPI.class);
 
-    public String authLogin(UserDto userDto) throws Exception {
-
+    public String authLogin(UserDto userDto) throws IOException {
         Call<ResponseData<DodamTokenVo>> call = api.dodamAuthLogin(userDto, dodamApiKey);
-        try {
-            Response<ResponseData<DodamTokenVo>> response = call.execute();
-            if (response.isSuccessful() && response.body() != null) {
-                return response.body().getData().getToken();
-            } else {
-                throw new NullPointerException("도담도담에 일치하는 정보가 없습니다");
-            }
-        } catch (Exception e) {
-            throw e;
+        Response<ResponseData<DodamTokenVo>> response = call.execute();
+        if (response.isSuccessful() && response.body() != null) {
+            return response.body().getData().getToken();
+        } else {
+            throw new NullPointerException("도담도담에 일치하는 정보가 없습니다");
         }
     }
 
-    public DodamUserDataVo getUserInfo(String token) throws Exception {
+    public DodamUserDataVo getUserInfo(String token) throws IOException {
         Call<ResponseData<DodamUserVo<DodamUserDataVo>>> call = api.dodamGetUserInfo(token);
-        try {
-            Response<ResponseData<DodamUserVo<DodamUserDataVo>>> response = call.execute();
-            if (response.isSuccessful() && response.body() != null) {
-                return response.body().getData().getMemberData();
-            } else {
-                throw new NullPointerException("도담도담 서버에서 값을 받아오지 못했습니다");
-            }
-        } catch (Exception e) {
-            throw e;
+        Response<ResponseData<DodamUserVo<DodamUserDataVo>>> response = call.execute();
+        if (response.isSuccessful() && response.body() != null) {
+            return response.body().getData().getMemberData();
+        } else {
+            throw new NullPointerException("도담도담 서버에서 값을 받아오지 못했습니다");
         }
     }
 

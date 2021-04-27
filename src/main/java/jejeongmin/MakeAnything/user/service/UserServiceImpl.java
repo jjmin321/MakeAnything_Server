@@ -11,6 +11,8 @@ import jejeongmin.MakeAnything.common.vo.dodam.DodamUserDataVo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,22 +35,18 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper;
 
     @Override
-    public Map<String, String> signIn(UserDto userDto) throws Exception {
-        try {
-            userDto.setPw(encrypt.sha512(userDto.getPw()));
-            String dodamToken = dodamService.authLogin(userDto);
-            DodamUserDataVo dodamUserDataVo = dodamService.getUserInfo(dodamToken);
-            User mappedUser = modelMapper.map(dodamUserDataVo, User.class);
-            User createdUser = userRepository.save(mappedUser);
-            String accessToken = jwt.createToken(createdUser, JwtEnum.ACCESS);
-            String refreshToken = jwt.createToken(createdUser, JwtEnum.REFRESH);
-            Map<String, String> token = new HashMap<String, String>();
-            token.put("accessToken", accessToken);
-            token.put("refreshToken", refreshToken);
-            return token;
-        } catch (Exception e) {
-            throw e;
-        }
+    public Map<String, String> signIn(UserDto userDto) throws IOException {
+        userDto.setPw(encrypt.sha512(userDto.getPw()));
+        String dodamToken = dodamService.authLogin(userDto);
+        DodamUserDataVo dodamUserDataVo = dodamService.getUserInfo(dodamToken);
+        User mappedUser = modelMapper.map(dodamUserDataVo, User.class);
+        User createdUser = userRepository.save(mappedUser);
+        String accessToken = jwt.createToken(createdUser, JwtEnum.ACCESS);
+        String refreshToken = jwt.createToken(createdUser, JwtEnum.REFRESH);
+        Map<String, String> token = new HashMap<String, String>();
+        token.put("accessToken", accessToken);
+        token.put("refreshToken", refreshToken);
+        return token;
     }
 
 }

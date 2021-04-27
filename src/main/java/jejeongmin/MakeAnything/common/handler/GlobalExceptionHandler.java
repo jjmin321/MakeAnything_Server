@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IOException.class)
     public Response handleIOException(IOException e) {
-        return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, "파일을 읽는 과정에서 오류가 발생했습니다", "IOException");
+        return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 처리 과정에서 오류가 발생했습니다", "IOException");
     }
 
     @ExceptionHandler(MakeDirectoryException.class)
