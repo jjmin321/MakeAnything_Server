@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class ResponseData<T> extends Response{
+public class ResponseData<T> extends Response {
 
     private final T data;
 
@@ -15,7 +15,8 @@ public class ResponseData<T> extends Response{
         this.data = data;
     }
 
-    public String getDataInfo() {
+    @Override
+    public String toString() {
         return ToStringBuilder.reflectionToString(data, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
