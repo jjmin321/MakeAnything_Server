@@ -13,6 +13,12 @@ public class User {
     @Column(length = 50, nullable = false)
     private String id;
 
+    @Column(nullable = false)
+    private Integer grade;
+
+    @Column(nullable = false)
+    private Integer room;
+
     @Column(length = 50, nullable = false)
     private String name;
 
@@ -24,11 +30,5 @@ public class User {
 
     @Column(nullable = false)
     private String profileImage;
-
-    @Column(nullable = false)
-    private Integer grade;
-
-    @Column(nullable = false)
-    private Integer room;
 
 }
