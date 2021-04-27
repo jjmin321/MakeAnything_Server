@@ -6,8 +6,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -30,21 +28,9 @@ public class LoggingAspect {
         params.put("User", ((User) request.getAttribute("user")).getName());
         params.put("Controller", joinPoint.getSignature().getDeclaringType().getSimpleName());
         params.put("Method", "/"+joinPoint.getSignature().getName());
-        params.put("Params", getParams(request));
         params.put("Time", new Date());
         log.info("AutoLogging {}", params);
         return result;
-    }
-
-    private static JSONObject getParams(HttpServletRequest request) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        Enumeration<String> params = request.getParameterNames();
-        while (params.hasMoreElements()) {
-            String param = params.nextElement();
-            String replaceParam = param.replaceAll("\\.", "-");
-            jsonObject.put(replaceParam, request.getParameter(param));
-        }
-        return jsonObject;
     }
 
 }
