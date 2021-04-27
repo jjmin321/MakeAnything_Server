@@ -7,13 +7,6 @@ import java.security.MessageDigest;
 @Component
 public class Encrypt {
 
-    /**
-     * All Methods
-     * @param data - A Data want to encrypt by Encryption Method
-     * @return encrypted data - A Data encrypted by Encryption Method
-     * @throws EncryptException - An Exception occurred in Encryption Method
-     */
-
     public String sha256(String data) throws EncryptException {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

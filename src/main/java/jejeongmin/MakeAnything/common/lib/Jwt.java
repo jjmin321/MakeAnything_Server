@@ -15,7 +15,6 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.*;
 
-
 @Component
 public class Jwt {
 
@@ -29,11 +28,6 @@ public class Jwt {
 
     @Autowired
     private UserRepository userRepository;
-
-    /**
-     * @param user - An User want to create Token
-     * @return token - A Token created with user information
-     */
 
     public String createToken(User user, JwtEnum jwtEnum) {
         Date now = new Date();
@@ -73,24 +67,12 @@ public class Jwt {
         return builder.compact();
     }
 
-    /**
-     * 토큰 검증
-     * @param token - A AccessToken get from client
-     * @return User - A Client User
-     */
-
     public User validateToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretAccessKey))
                 .parseClaimsJws(token).getBody();
         Optional<User> user = userRepository.findById((String) claims.get("id"));
         return user.get();
     }
-
-    /**
-     * 토큰 갱신
-     * @param refreshToken - A RefreshToken get from client
-     * @return accessToken - New AccessToken send to client
-     */
 
     public String refresh(String refreshToken) {
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretRefreshKey))
@@ -101,12 +83,6 @@ public class Jwt {
         }
         return createToken(user.get(), JwtEnum.ACCESS);
     }
-
-    /**
-     * 토큰 추출
-     * @param request - HttpServletRequest from client
-     * @return token - A Token from request header
-     */
 
     public String extract(HttpServletRequest request, String type) {
         Enumeration<String> headers = request.getHeaders("Authorization");

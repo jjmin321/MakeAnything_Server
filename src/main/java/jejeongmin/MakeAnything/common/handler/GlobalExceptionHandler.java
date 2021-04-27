@@ -13,19 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpClientErrorException;
-
 import java.io.IOException;
 
 @ControllerAdvice
 @ResponseBody
 public class GlobalExceptionHandler {
-
-    /**
-     * All Methods
-     * @param e - Exception Information
-     * @return - ResponseError with Status Code, Exception Message, Exception Kind
-     */
 
     @ExceptionHandler(EncryptException.class)
     public Response handleEncryptException(EncryptException e) {

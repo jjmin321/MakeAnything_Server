@@ -3,7 +3,6 @@ package jejeongmin.MakeAnything.item.domain.entity;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity(name = "item")

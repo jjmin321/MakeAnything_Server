@@ -20,12 +20,6 @@ public class DodamService {
 
     private final RetrofitAPI api = RetrofitConfig.getRetrofit().create(RetrofitAPI.class);
 
-    /**
-     * @param userDto - DodamDodam ID , DodamDodam PW
-     * @return token - DodamDodam Token
-     * @throws Exception - An Exception occurred from DodamDodam API
-     */
-
     public String authLogin(UserDto userDto) throws Exception {
 
         Call<ResponseData<DodamTokenVo>> call = api.dodamAuthLogin(userDto, dodamApiKey);
@@ -40,12 +34,6 @@ public class DodamService {
             throw e;
         }
     }
-
-    /**
-     * @param token - DodamDodam Token
-     * @return DodamUserData - An User Data from DodamDodam
-     * @throws Exception - An Exception occurred from DodamDodam API
-     */
 
     public DodamUserDataVo getUserInfo(String token) throws Exception {
         Call<ResponseData<DodamUserVo<DodamUserDataVo>>> call = api.dodamGetUserInfo(token);

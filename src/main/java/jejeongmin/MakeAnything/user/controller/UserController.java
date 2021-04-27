@@ -24,12 +24,6 @@ public class UserController {
     @Autowired
     private Jwt jwt;
 
-    /**
-     * @param userDto - DodamDodam ID, PW
-     * @return response - Status Code, Message, JWT(AccessToken and RefreshToken)
-     * @throws Exception - An Exception occurred in UserService Layer
-     */
-
     @PostMapping("/signIn")
     public Response signIn(@Valid @RequestBody UserDto userDto) throws Exception {
         try {
@@ -40,22 +34,12 @@ public class UserController {
         }
     }
 
-    /**
-     * @param request - An AccessToken
-     * @return response - Status Code, Message, User
-     */
-
     @AuthorizationCheck
     @GetMapping("/getInfo")
     public Response getInfo(HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         return new ResponseData<User>(HttpStatus.OK, "내 정보 조회 성공", user);
     }
-
-    /**
-     * @param refreshToken - A RefreshToken
-     * @return response - Status Code, Message, AccessToken
-     */
 
     @GetMapping("/token")
     public Response token(@RequestParam String refreshToken) {

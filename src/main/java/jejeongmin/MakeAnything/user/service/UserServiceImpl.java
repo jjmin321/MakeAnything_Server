@@ -11,7 +11,6 @@ import jejeongmin.MakeAnything.common.vo.dodam.DodamUserDataVo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,12 +31,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
-
-    /**
-     * @param userDto - ID and PW
-     * @return User - an User Record
-     * @throws Exception - An Exception occurred in DodamService or UserRepository Layer
-     */
 
     @Override
     public Map<String, String> signIn(UserDto userDto) throws Exception {
