@@ -1,5 +1,5 @@
 src/test/
-src/main/resources/application.yml
+src/main/resources/
 banner.jpg
 .gradle
 build/
