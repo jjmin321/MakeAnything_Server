@@ -1,5 +1,6 @@
 package jejeongmin.MakeAnything.item.controller;
 
+import jejeongmin.MakeAnything.common.annotation.AutoLogging;
 import jejeongmin.MakeAnything.common.vo.http.Response;
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
 import jejeongmin.MakeAnything.item.service.ItemService;
@@ -20,6 +21,7 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+    @AutoLogging
     @PostMapping("/uploadImage")
     public Response uploadImage(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         String fileName = itemService.uploadImage(file);

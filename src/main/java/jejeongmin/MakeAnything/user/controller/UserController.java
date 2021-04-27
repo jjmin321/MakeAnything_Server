@@ -1,6 +1,7 @@
 package jejeongmin.MakeAnything.user.controller;
 
 import jejeongmin.MakeAnything.common.annotation.AuthorizationCheck;
+import jejeongmin.MakeAnything.common.annotation.AutoLogging;
 import jejeongmin.MakeAnything.common.lib.Jwt;
 import jejeongmin.MakeAnything.common.vo.http.Response;
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
@@ -25,12 +26,14 @@ public class UserController {
     @Autowired
     private Jwt jwt;
 
+    @AutoLogging
     @PostMapping("/signIn")
     public Response signIn(@Valid @RequestBody UserDto userDto) throws IOException {
         Map<String, String> jsonWebToken = userService.signIn(userDto);
         return new ResponseData<Object>(HttpStatus.OK, "로그인 성공", jsonWebToken);
     }
 
+    @AutoLogging
     @AuthorizationCheck
     @GetMapping("/getInfo")
     public Response getInfo(HttpServletRequest request) {
