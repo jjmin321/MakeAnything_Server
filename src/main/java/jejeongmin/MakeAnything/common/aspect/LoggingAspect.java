@@ -1,5 +1,7 @@
 package jejeongmin.MakeAnything.common.aspect;
 
+import jejeongmin.MakeAnything.common.vo.http.Response;
+import jejeongmin.MakeAnything.common.vo.http.ResponseData;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,6 +19,7 @@ import java.util.*;
 @Component
 @Aspect
 @Slf4j
+@SuppressWarnings("unchecked")
 public class LoggingAspect {
 
     @Pointcut("@annotation(jejeongmin.MakeAnything.common.annotation.AutoLogging)")
@@ -26,29 +29,30 @@ public class LoggingAspect {
     public void loggingWithUser() {}
 
     @Around("logging()")
-    public Object methodLogging(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result = joinPoint.proceed();
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        Map<String, Object> params = new HashMap<>();
-        printLogInfo(joinPoint, result, request, params);
-        return result;
+    public Response methodLogging(ProceedingJoinPoint joinPoint) throws Throwable {
+        ResponseData<Object> response = (ResponseData<Object>) joinPoint.proceed();
+        printLogInfo(joinPoint, response,false);
+        return response;
     }
 
     @Around("loggingWithUser()")
-    public Object methodLoggingWithUser(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result = joinPoint.proceed();
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        Map<String, Object> params = new HashMap<>();
-        params.put("User", ((User) request.getAttribute("user")).getName());
-        printLogInfo(joinPoint, result, request, params);
-        return result;
+    public Response methodLoggingWithUser(ProceedingJoinPoint joinPoint) throws Throwable {
+        ResponseData<Object> response = (ResponseData<Object>) joinPoint.proceed();
+        printLogInfo(joinPoint, response,true);
+        return response;
     }
 
-    private void printLogInfo(ProceedingJoinPoint joinPoint, Object result, HttpServletRequest request, Map<String, Object> params) throws JSONException {
+    private void printLogInfo(ProceedingJoinPoint joinPoint, ResponseData<Object> response, boolean withUser) throws Throwable {
+        Map<String, Object> params = new HashMap<>();
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         params.put("Controller", joinPoint.getSignature().getDeclaringType().getSimpleName());
         params.put("Method", "/"+joinPoint.getSignature().getName());
-        params.put("Params", getParams(request));
+        params.put("Request", getParams(request));
+        params.put("Data", response.getDataInfo());
         params.put("Time", new Date());
+        if (withUser) {
+            params.put("User", ((User) request.getAttribute("user")).getName());
+        }
         log.info("AutoLogging {}", params);
     }
 

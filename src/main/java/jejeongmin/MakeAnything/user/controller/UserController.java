@@ -2,6 +2,7 @@ package jejeongmin.MakeAnything.user.controller;
 
 import jejeongmin.MakeAnything.common.annotation.AuthorizationCheck;
 import jejeongmin.MakeAnything.common.annotation.AutoLogging;
+import jejeongmin.MakeAnything.common.annotation.AutoLoggingWithUser;
 import jejeongmin.MakeAnything.common.lib.Jwt;
 import jejeongmin.MakeAnything.common.vo.http.Response;
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
@@ -33,7 +34,7 @@ public class UserController {
         return new ResponseData<Object>(HttpStatus.OK, "로그인 성공", jsonWebToken);
     }
 
-    @AutoLogging
+    @AutoLoggingWithUser
     @AuthorizationCheck
     @GetMapping("/getInfo")
     public Response getInfo(HttpServletRequest request) {
