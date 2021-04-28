@@ -40,6 +40,13 @@ public class ItemController {
         return new ResponseData<List<Item>>(HttpStatus.OK, "각 마켓 별 5가지 물품 정보 반환 성공", items);
     }
 
+    @AutoLogging
+    @GetMapping("/searchItems")
+    public Response searchItems(@RequestParam String name) {
+        List<Item> items = itemService.searchItems(name);
+        return new ResponseData<List<Item>>(HttpStatus.OK, "물품 정보 검색 성공", items);
+    }
+
     @AutoLoggingWithUser
     @AuthorizationCheck
     @PostMapping("/createItem")

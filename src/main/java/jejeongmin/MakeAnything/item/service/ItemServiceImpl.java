@@ -35,6 +35,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<Item> searchItems(String name) { return itemRepository.findAllByNameContaining(name); }
+
+    @Override
     public Item createItem(User user, ItemDto itemDto) {
         Item item = modelMapper.map(itemDto, Item.class);
         if (itemRepository.findByName(item.getName()) != null) {

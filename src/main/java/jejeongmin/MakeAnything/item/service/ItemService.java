@@ -13,6 +13,8 @@ public interface ItemService {
 
     List<Item> getRecentItems();
 
+    List<Item> searchItems(String name);
+
     Item createItem(User user, ItemDto itemDto);
 
     String uploadImage(MultipartFile file) throws IOException;
