@@ -26,10 +26,18 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+    @AutoLogging
+    @GetMapping("/getItem")
+    public Response getItem(@RequestParam String name) {
+        Item item = itemService.getItem(name);
+        return new ResponseData<Item>(HttpStatus.OK, "물품 정보 반환 성공", item);
+    }
+
+    @AutoLogging
     @GetMapping("/getRecentItems")
     public Response getRecentItems() {
         List<Item> items = itemService.getRecentItems();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "최신 5가지 물품 정보 반환 성공", items);
+        return new ResponseData<List<Item>>(HttpStatus.OK, "각 마켓 별 5가지 물품 정보 반환 성공", items);
     }
 
     @AutoLoggingWithUser

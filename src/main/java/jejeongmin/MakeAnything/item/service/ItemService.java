@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ItemService {
 
+    Item getItem(String name);
+
     List<Item> getRecentItems();
 
     Item createItem(User user, ItemDto itemDto);

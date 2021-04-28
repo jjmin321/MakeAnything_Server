@@ -26,6 +26,9 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
 
     @Override
+    public Item getItem(String name) { return itemRepository.findByName(name); }
+
+    @Override
     public List<Item> getRecentItems() {
         return itemRepository.findTop5ByOrderByCreatedAtDesc();
     }
@@ -33,6 +36,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item createItem(User user, ItemDto itemDto) {
         Item item = modelMapper.map(itemDto, Item.class);
+//        if (itemRepository.findByName(item.getName()) )
         item.setUser(user);
         return itemRepository.save(item);
     }
