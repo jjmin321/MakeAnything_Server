@@ -47,26 +47,29 @@ user
 ```
 common
     ㄴ annotation - 직접 정의하여 사용하는 어노테이션
-    ㄴ aspect - filter, interceptor와 달리 특정 비즈니스 로직의 공통 관심사항을 정의 
+    ㄴ aspect - 특정 비즈니스 로직의 공통된 처리를 수행 
     ㄴ configuration - IOC & DI를 위한 Bean 생성, Configurer 구현체
     ㄴ enums - 코드 단순화, 가독성 등을 위한 열거형 타입 
     ㄴ exception - 정확한 에러 생성을 위한 사용자 정의 에러
-    ㄴ filter - 모든 컨트롤러에 대한 요청을 필터링 
-    ㄴ handler - 정확한 에러 처리를 위한 핸들러
-    ㄴ interceptor - 특정 컨트롤러에 대한 요청을 검사 
+    ㄴ filter - 모든 API에 대한 요청을 필터링 
+    ㄴ handler - 비즈니스 로직에서 일어난 특정 이벤트를 처리하는 핸들러
+    ㄴ interceptor - 특정 API에 대한 요청을 검사 
     ㄴ lib - 비즈니스 로직과 분리된 재사용, 가독성을 위한 모듈
-    ㄴ retrofit - 교내 도담도담 서비스와 통신을 위한 모듈
-    ㄴ vo - 초기화 후 Getter을 통해 값만을 사용하기 위한 오브젝트
+    ㄴ retrofit - 교내 도담도담 서비스와 통신 
+    ㄴ vo - 객체를 정의 후 값을 사용하기 위한 모듈
 ```
 
 
 ### 계층 구조 
-기본적인 구조는 3계층(Controller, Service, Repository)으로 이루어집니다<br>
-HTTP Request의 요청이 들어올 때 Filter 계층에서 정제 역할(CORS 처리)을 합니다<br>
-HTTP Request에 따라 특정 처리가 필요할 때 Interceptor 계층(유저 인증)이 추가될 수 있습니다<br>
-특정 비즈니스 로직에서 공통 관심사항이 되는 코드가 필요할 때 @Before, @Around, @After Advice 계층(유저 확인)이 추가될 수 있습니다<br>
-DTO를 사용하여 계층 간 데이터를 교환하고, VO를 사용하여 Response 등을 생성합니다.
+Client의 요청이 들어올 때 Filter 계층에서 해당 요청에 대한 정제 작업을 수행합니다.<br>
+그 후, 특정 API에 따라 공통된 처리가 필요할 때 Interceptor 계층에서 공통된 처리를 수행합니다.<br>
+만약 특정 메서드에 따라 공통된 처리가 필요하다면 Aspect 계층에서 공통된 처리를 수행할 수 있습니다.<br>
 
-![image](https://user-images.githubusercontent.com/52072077/115810464-ea363400-a428-11eb-84ad-c6fb0e456166.png)
+서버 내 서비스 구조는 3계층(Controller, Service, Domain)으로 이루어집니다.<br>
+Controller는 클라이언트의 요청을 받고, Service는 요청의 비즈니스 로직을 수행하며, Domain을 통해 데이터베이스에 접근합니다.
+
+DTO를 사용하여 계층 간 데이터를 교환할 수 있고, VO를 사용하여 객체를 정의하고 값을 사용합니다.
+
+![image](https://user-images.githubusercontent.com/52072077/116331102-014e9a80-a80a-11eb-86e4-1a3fb129b7e6.png)
 
 # 2021년 5월 말 배포 예정으로 개발 중입니다 
