@@ -10,11 +10,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @Aspect
@@ -42,29 +45,19 @@ public class LoggingAspect {
         return response;
     }
 
-    private void printLogInfo(ProceedingJoinPoint joinPoint, ResponseData<Object> response, boolean withUser) throws Throwable {
+    private void printLogInfo(ProceedingJoinPoint joinPoint, ResponseData<Object> response, boolean withUser) throws IOException {
         Map<String, Object> params = new HashMap<>();
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         params.put("Controller", joinPoint.getSignature().getDeclaringType().getSimpleName());
         params.put("Method", "/"+joinPoint.getSignature().getName());
-        params.put("Request", getParams(request));
-        params.put("Data", response.getDataInfo());
+        params.put("Status", response.getStatus());
+        params.put("Message", response.getMessage());
         params.put("Time", new Date());
         if (withUser) {
+            params.put("Data", response);
             params.put("User", ((User) request.getAttribute("user")).getName());
         }
-        log.info("AutoLogging {}", params);
-    }
-
-    private static JSONObject getParams(HttpServletRequest request) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        Enumeration<String> params = request.getParameterNames();
-        while (params.hasMoreElements()) {
-            String param = params.nextElement();
-            String replaceParam = param.replaceAll("\\.", "-");
-            jsonObject.put(replaceParam, request.getParameter(param));
-        }
-        return jsonObject;
+        log.info("@AutoLogging {}", params);
     }
 
 }
