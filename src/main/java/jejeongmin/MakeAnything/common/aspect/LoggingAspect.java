@@ -8,16 +8,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @Aspect
@@ -45,9 +40,9 @@ public class LoggingAspect {
         return response;
     }
 
-    private void printLogInfo(ProceedingJoinPoint joinPoint, ResponseData<Object> response, boolean withUser) throws IOException {
+    private void printLogInfo(ProceedingJoinPoint joinPoint, ResponseData<Object> response, boolean withUser) {
         Map<String, Object> params = new HashMap<>();
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         params.put("Controller", joinPoint.getSignature().getDeclaringType().getSimpleName());
         params.put("Method", "/"+joinPoint.getSignature().getName());
         params.put("Status", response.getStatus());
