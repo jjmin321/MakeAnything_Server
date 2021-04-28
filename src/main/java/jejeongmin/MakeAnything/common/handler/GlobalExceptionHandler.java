@@ -3,10 +3,7 @@ package jejeongmin.MakeAnything.common.handler;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
-import jejeongmin.MakeAnything.common.exception.AuthorizationException;
-import jejeongmin.MakeAnything.common.exception.EncryptException;
-import jejeongmin.MakeAnything.common.exception.FileIsEmptyException;
-import jejeongmin.MakeAnything.common.exception.MakeDirectoryException;
+import jejeongmin.MakeAnything.common.exception.*;
 import jejeongmin.MakeAnything.common.vo.http.Response;
 import jejeongmin.MakeAnything.common.vo.http.ResponseError;
 import org.springframework.http.HttpStatus;
@@ -67,6 +64,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MakeDirectoryException.class)
     public Response handleMakeDirectoryException(MakeDirectoryException e) {
         return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, "디렉토리 생성 과정에서 오류가 발생했습니다", "MakeDirectoryException");
+    }
+
+    @ExceptionHandler(DuplicateRecordException.class)
+    public Response handleDuplicateRecordException(DuplicateRecordException e) {
+        return new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), "DuplicateRecordException");
     }
 
 }
