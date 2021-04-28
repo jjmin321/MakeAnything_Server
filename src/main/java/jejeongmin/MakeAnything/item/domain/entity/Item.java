@@ -1,8 +1,11 @@
 package jejeongmin.MakeAnything.item.domain.entity;
 
+import jejeongmin.MakeAnything.common.enums.ItemType;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
 @Entity(name = "item")
@@ -29,6 +32,7 @@ public class Item {
     @Column(length = 50, nullable = false)
     private String thumbnail;
 
-    @Column(length = 10, nullable = false)
-    private String type;
+    @Enumerated(EnumType.ORDINAL)
+    private ItemType type;
+
 }
