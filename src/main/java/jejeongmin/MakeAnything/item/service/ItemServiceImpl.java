@@ -1,5 +1,6 @@
 package jejeongmin.MakeAnything.item.service;
 
+import jejeongmin.MakeAnything.common.exception.DuplicateRecordException;
 import jejeongmin.MakeAnything.common.exception.FileIsEmptyException;
 import jejeongmin.MakeAnything.common.lib.File;
 import jejeongmin.MakeAnything.item.domain.dto.ItemDto;
@@ -36,7 +37,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item createItem(User user, ItemDto itemDto) {
         Item item = modelMapper.map(itemDto, Item.class);
-//        if (itemRepository.findByName(item.getName()) )
+        if (itemRepository.findByName(item.getName()) != null) {
+            throw new DuplicateRecordException("같은 물품명이 이미 존재합니다. 다른 물품명으로 등록해주세요.");
+        }
         item.setUser(user);
         return itemRepository.save(item);
     }
