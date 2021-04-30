@@ -1,5 +1,6 @@
 package jejeongmin.MakeAnything.item.service;
 
+import jejeongmin.MakeAnything.common.enums.ItemType;
 import jejeongmin.MakeAnything.common.exception.DuplicateRecordException;
 import jejeongmin.MakeAnything.common.exception.FileIsEmptyException;
 import jejeongmin.MakeAnything.common.lib.File;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -30,8 +33,12 @@ public class ItemServiceImpl implements ItemService {
     public Item getItem(String name) { return itemRepository.findByName(name); }
 
     @Override
-    public List<Item> getRecentItems() {
-        return itemRepository.findTop5ByOrderByCreatedAtDesc();
+    public Map<ItemType, List<Item>> getRecentItems() {
+        Map<ItemType, List<Item>> items = new HashMap<ItemType, List<Item>>();
+        items.put(ItemType.TALENT, itemRepository.findTop5ByTypeOrderByCreatedAtDesc(ItemType.TALENT));
+        items.put(ItemType.USED, itemRepository.findTop5ByTypeOrderByCreatedAtDesc(ItemType.USED));
+        items.put(ItemType.CUSTOM, itemRepository.findTop5ByTypeOrderByCreatedAtDesc(ItemType.CUSTOM));
+        return items;
     }
 
     @Override

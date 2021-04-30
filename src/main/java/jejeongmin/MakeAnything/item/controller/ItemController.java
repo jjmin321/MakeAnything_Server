@@ -3,6 +3,7 @@ package jejeongmin.MakeAnything.item.controller;
 import jejeongmin.MakeAnything.common.annotation.AuthorizationCheck;
 import jejeongmin.MakeAnything.common.annotation.AutoLogging;
 import jejeongmin.MakeAnything.common.annotation.AutoLoggingWithUser;
+import jejeongmin.MakeAnything.common.enums.ItemType;
 import jejeongmin.MakeAnything.common.vo.http.Response;
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
 import jejeongmin.MakeAnything.item.domain.dto.ItemDto;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/item")
@@ -36,8 +38,8 @@ public class ItemController {
     @AutoLogging
     @GetMapping("/getRecentItems")
     public Response getRecentItems() {
-        List<Item> items = itemService.getRecentItems();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "각 마켓 별 5가지 물품 정보 반환 성공", items);
+        Map<ItemType, List<Item>> items = itemService.getRecentItems();
+        return new ResponseData<Map<ItemType, List<Item>>>(HttpStatus.OK, "각 마켓 별 5가지 물품 정보 반환 성공", items);
     }
 
     @AutoLogging
