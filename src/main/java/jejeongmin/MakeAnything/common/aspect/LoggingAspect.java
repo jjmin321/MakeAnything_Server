@@ -2,6 +2,7 @@ package jejeongmin.MakeAnything.common.aspect;
 
 import jejeongmin.MakeAnything.common.vo.http.Response;
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
+import jejeongmin.MakeAnything.common.vo.http.ResponseError;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,6 +27,9 @@ public class LoggingAspect {
     @Pointcut("@annotation(jejeongmin.MakeAnything.common.annotation.AutoLoggingWithUser)")
     public void loggingWithUser() {}
 
+    @Pointcut("execution(* jejeongmin.MakeAnything.common.handler.*.*(..))")
+    public void loggingOnlyException() {}
+
     @Around("logging()")
     public Response methodLogging(ProceedingJoinPoint joinPoint) throws Throwable {
         ResponseData<Object> response = (ResponseData<Object>) joinPoint.proceed();
@@ -38,6 +42,17 @@ public class LoggingAspect {
         ResponseData<Object> response = (ResponseData<Object>) joinPoint.proceed();
         printLogInfo(joinPoint, response,true);
         return response;
+    }
+
+    @Around("loggingOnlyException()")
+    public Response methodLoggingOnlyException(ProceedingJoinPoint joinPoint) throws Throwable {
+        ResponseError responseError = (ResponseError) joinPoint.proceed();
+        Map<String, Object> params = new HashMap<>();
+        params.put("Status", Integer.toString(responseError.getStatus()));
+        params.put("Message", responseError.getMessage());
+        params.put("Exception", responseError.getError());
+        log.info("@AutoLogging {}", params);
+        return responseError;
     }
 
     private void printLogInfo(ProceedingJoinPoint joinPoint, ResponseData<Object> response, boolean withUser) {
