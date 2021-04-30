@@ -31,7 +31,7 @@ public class UserController {
     @PostMapping("/signIn")
     public Response signIn(@Valid @RequestBody UserDto userDto) throws IOException {
         Map<String, String> jsonWebToken = userService.signIn(userDto);
-        return new ResponseData<Object>(HttpStatus.OK, "로그인 성공", jsonWebToken);
+        return new ResponseData<Map<String, String>>(HttpStatus.OK, "로그인 성공", jsonWebToken);
     }
 
     @AutoLoggingWithUser
