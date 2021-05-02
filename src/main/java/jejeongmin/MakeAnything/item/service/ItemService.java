@@ -13,7 +13,7 @@ public interface ItemService {
 
     Item getItem(String name);
 
-    Map<ItemType, List<Item>> getRecentItems();
+    List<Item> getAllItems();
 
     List<Item> searchItems(String name);
 

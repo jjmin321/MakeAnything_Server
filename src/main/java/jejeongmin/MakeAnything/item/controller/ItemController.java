@@ -36,10 +36,10 @@ public class ItemController {
     }
 
     @AutoLogging
-    @GetMapping("/getRecentItems")
-    public Response getRecentItems() {
-        Map<ItemType, List<Item>> items = itemService.getRecentItems();
-        return new ResponseData<Map<ItemType, List<Item>>>(HttpStatus.OK, "각 마켓 별 5가지 물품 정보 반환 성공", items);
+    @GetMapping("/getAllItems")
+    public Response getAllItems() {
+        List<Item> items = itemService.getAllItems();
+        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 정보 반환 성공", items);
     }
 
     @AutoLogging

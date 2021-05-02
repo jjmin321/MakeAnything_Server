@@ -33,12 +33,8 @@ public class ItemServiceImpl implements ItemService {
     public Item getItem(String name) { return itemRepository.findByName(name); }
 
     @Override
-    public Map<ItemType, List<Item>> getRecentItems() {
-        Map<ItemType, List<Item>> items = new HashMap<ItemType, List<Item>>();
-        items.put(ItemType.TALENT, itemRepository.findTop5ByTypeOrderByCreatedAtDesc(ItemType.TALENT));
-        items.put(ItemType.USED, itemRepository.findTop5ByTypeOrderByCreatedAtDesc(ItemType.USED));
-        items.put(ItemType.CUSTOM, itemRepository.findTop5ByTypeOrderByCreatedAtDesc(ItemType.CUSTOM));
-        return items;
+    public List<Item> getAllItems() {
+        return itemRepository.findAllByOrderByCreatedAtDesc();
     }
 
     @Override
