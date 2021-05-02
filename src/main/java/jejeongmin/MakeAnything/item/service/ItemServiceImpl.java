@@ -33,9 +33,10 @@ public class ItemServiceImpl implements ItemService {
     public Item getItem(String name) { return itemRepository.findByName(name); }
 
     @Override
-    public List<Item> getAllItems() {
-        return itemRepository.findAllByOrderByCreatedAtDesc();
-    }
+    public List<Item> getAllItems() { return itemRepository.findAllByOrderByCreatedAt(); }
+
+    @Override
+    public List<Item> getAllItemsDesc() { return itemRepository.findAllByOrderByCreatedAtDesc(); }
 
     @Override
     public List<Item> searchItems(String name) { return itemRepository.findAllByNameContaining(name); }

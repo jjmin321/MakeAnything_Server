@@ -39,7 +39,14 @@ public class ItemController {
     @GetMapping("/getAllItems")
     public Response getAllItems() {
         List<Item> items = itemService.getAllItems();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 정보 반환 성공", items);
+        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 기존 등록 순으로 정보 반환 성공", items);
+    }
+
+    @AutoLogging
+    @GetMapping("/getAllItemsDesc")
+    public Response getAllItemsDesc() {
+        List<Item> items = itemService.getAllItemsDesc();
+        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 최신 등록 순으로 반환 성공", items);
     }
 
     @AutoLogging

@@ -7,13 +7,14 @@ import jejeongmin.MakeAnything.user.domain.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public interface ItemService {
 
     Item getItem(String name);
 
     List<Item> getAllItems();
+
+    List<Item> getAllItemsDesc();
 
     List<Item> searchItems(String name);
 
