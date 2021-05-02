@@ -50,6 +50,20 @@ public class ItemController {
     }
 
     @AutoLogging
+    @GetMapping("/getAllItemsByPrice")
+    public Response getAllItemsByPrice() {
+        List<Item> items = itemService.getAllItemsByPrice();
+        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 가격 낮은 순으로 반환 성공", items);
+   }
+
+   @AutoLogging
+   @GetMapping("/getAllItemsByPriceDesc")
+   public Response getAllItemsByPriceDesc() {
+        List<Item> items = itemService.getAllItemsByPriceDesc();
+        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 가격 높은 순으로 반환 성공", items);
+   }
+
+    @AutoLogging
     @GetMapping("/searchItems")
     public Response searchItems(@RequestParam String name) {
         List<Item> items = itemService.searchItems(name);

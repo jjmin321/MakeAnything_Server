@@ -16,6 +16,10 @@ public interface ItemService {
 
     List<Item> getAllItemsDesc();
 
+    List<Item> getAllItemsByPrice();
+
+    List<Item> getAllItemsByPriceDesc();
+
     List<Item> searchItems(String name);
 
     Item createItem(User user, ItemDto itemDto);
