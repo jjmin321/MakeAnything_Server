@@ -1,6 +1,5 @@
 package jejeongmin.MakeAnything.item.service;
 
-import jejeongmin.MakeAnything.common.enums.ItemType;
 import jejeongmin.MakeAnything.item.domain.dto.ItemDto;
 import jejeongmin.MakeAnything.item.domain.entity.Item;
 import jejeongmin.MakeAnything.user.domain.entity.User;
@@ -19,6 +18,12 @@ public interface ItemService {
     List<Item> getAllItemsByPrice();
 
     List<Item> getAllItemsByPriceDesc();
+
+    List<Item> getTalentItems();
+
+    List<Item> getUsedItems();
+
+    List<Item> getCustomItems();
 
     List<Item> searchItems(String name);
 

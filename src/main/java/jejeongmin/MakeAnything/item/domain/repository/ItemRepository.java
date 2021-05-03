@@ -14,5 +14,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     public List<Item> findAllByOrderByCreatedAtDesc();
     public List<Item> findAllByOrderByPrice();
     public List<Item> findAllByOrderByPriceDesc();
+    public List<Item> findAllByType(ItemType type);
     public List<Item> findTop5ByTypeOrderByCreatedAtDesc(ItemType type);
 }

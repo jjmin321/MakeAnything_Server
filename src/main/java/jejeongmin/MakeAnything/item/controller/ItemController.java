@@ -63,6 +63,28 @@ public class ItemController {
         return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 가격 높은 순으로 반환 성공", items);
    }
 
+   @AutoLogging
+   @GetMapping("/getTalentItems")
+   public Response getTalentItems() {
+        List<Item> items = itemService.getTalentItems();
+        return new ResponseData<List<Item>>(HttpStatus.OK, "재능 물품 최신 등록 순으로 반환 성공", items);
+   }
+
+   @AutoLogging
+   @GetMapping("/getUsedItems")
+   public Response getUsedItems() {
+        List<Item> items = itemService.getUsedItems();
+        return new ResponseData<List<Item>>(HttpStatus.OK, "중고 물품 최신 등록 순으로 반환 성공", items);
+   }
+
+   @AutoLogging
+   @GetMapping("/getCustomItems")
+   public Response getCustomItems() {
+        List<Item> items = itemService.getCustomItems();
+        return new ResponseData<List<Item>>(HttpStatus.OK, "판매 요청 물품 최신 등록순으로 반환 성공", items);
+   }
+
+
     @AutoLogging
     @GetMapping("/searchItems")
     public Response searchItems(@RequestParam String name) {
