@@ -3,14 +3,13 @@ package jejeongmin.MakeAnything.item.controller;
 import jejeongmin.MakeAnything.common.annotation.AuthorizationCheck;
 import jejeongmin.MakeAnything.common.annotation.AutoLogging;
 import jejeongmin.MakeAnything.common.annotation.AutoLoggingWithUser;
-import jejeongmin.MakeAnything.common.enums.ItemType;
 import jejeongmin.MakeAnything.common.vo.http.Response;
 import jejeongmin.MakeAnything.common.vo.http.ResponseData;
 import jejeongmin.MakeAnything.item.domain.dto.ItemDto;
 import jejeongmin.MakeAnything.item.domain.entity.Item;
 import jejeongmin.MakeAnything.item.service.ItemService;
 import jejeongmin.MakeAnything.user.domain.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,14 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/item")
 public class ItemController {
 
-    @Autowired
-    private ItemService itemService;
+    private final ItemService itemService;
 
     @AutoLogging
     @GetMapping("/getItem")

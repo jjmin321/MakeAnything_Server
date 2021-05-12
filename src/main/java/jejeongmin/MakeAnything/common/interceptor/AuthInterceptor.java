@@ -2,17 +2,17 @@ package jejeongmin.MakeAnything.common.interceptor;
 
 import jejeongmin.MakeAnything.common.lib.Jwt;
 import jejeongmin.MakeAnything.user.domain.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
+@RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private Jwt jwt;
+    private final Jwt jwt;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {

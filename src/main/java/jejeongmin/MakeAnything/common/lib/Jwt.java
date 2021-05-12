@@ -5,6 +5,7 @@ import jejeongmin.MakeAnything.common.enums.JwtEnum;
 import jejeongmin.MakeAnything.common.exception.AuthorizationException;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import jejeongmin.MakeAnything.user.domain.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.security.Key;
 import java.util.*;
 
 @Component
+@RequiredArgsConstructor
 public class Jwt {
 
     @Value("${jwt.secret.access}")
@@ -26,8 +28,7 @@ public class Jwt {
 
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public String createToken(User user, JwtEnum jwtEnum) {
         Date now = new Date();

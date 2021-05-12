@@ -8,8 +8,8 @@ import jejeongmin.MakeAnything.user.domain.entity.User;
 import jejeongmin.MakeAnything.user.domain.repository.UserRepository;
 import jejeongmin.MakeAnything.common.retrofit.service.DodamService;
 import jejeongmin.MakeAnything.common.vo.dodam.DodamUserDataVo;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,22 +17,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private Encrypt encrypt;
-
-    @Autowired
-    private Jwt jwt;
-
-    @Autowired
-    private DodamService dodamService;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final Encrypt encrypt;
+    private final Jwt jwt;
+    private final DodamService dodamService;
+    private final ModelMapper modelMapper;
 
     @Override
     public Map<String, String> signIn(UserDto userDto) throws IOException {

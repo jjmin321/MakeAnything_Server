@@ -8,26 +8,20 @@ import jejeongmin.MakeAnything.item.domain.dto.ItemDto;
 import jejeongmin.MakeAnything.item.domain.entity.Item;
 import jejeongmin.MakeAnything.item.domain.repository.ItemRepository;
 import jejeongmin.MakeAnything.user.domain.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
-    @Autowired
-    private File fileLib;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private ItemRepository itemRepository;
+    private final File fileLib;
+    private final ModelMapper modelMapper;
+    private final ItemRepository itemRepository;
 
     @Override
     public Item getItem(String name) { return itemRepository.findByName(name); }

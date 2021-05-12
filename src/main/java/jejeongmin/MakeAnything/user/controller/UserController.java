@@ -9,7 +9,7 @@ import jejeongmin.MakeAnything.common.vo.http.ResponseData;
 import jejeongmin.MakeAnything.user.domain.dto.UserDto;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import jejeongmin.MakeAnything.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +18,12 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private Jwt jwt;
+    private final UserService userService;
+    private final Jwt jwt;
 
     @AutoLogging
     @PostMapping("/signIn")
