@@ -52,12 +52,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item createItem(User user, ItemDto itemDto) {
-        Item item = modelMapper.map(itemDto, Item.class);
-        if (itemRepository.findByName(item.getName()) != null) {
+        if (itemRepository.findByName(itemDto.getName()) != null) {
             throw new DuplicateRecordException("같은 물품명이 이미 존재합니다. 다른 물품명으로 등록해주세요.");
         }
-        item.setUser(user);
-        return itemRepository.save(item);
+        itemDto.setUser(user);
+        return itemRepository.save(itemDto.toEntity());
     }
 
     @Override
