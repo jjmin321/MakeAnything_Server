@@ -1,12 +1,14 @@
 package jejeongmin.MakeAnything.user.domain.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 
 @Entity(name = "member")
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
     @Id
