@@ -2,16 +2,16 @@ package jejeongmin.MakeAnything.item.domain.entity;
 
 import jejeongmin.MakeAnything.common.enums.ItemType;
 import jejeongmin.MakeAnything.user.domain.entity.User;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "item")
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
@@ -37,5 +37,15 @@ public class Item {
 
     @CreationTimestamp
     private LocalDateTime createdAt; // Date(UTC Issue in java) -> LocalDateTime
+
+    @Builder
+    public Item(ItemType type, User user, String name, String description, Integer price, String thumbnail) {
+        this.type = type;
+        this.user = user;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.thumbnail = thumbnail;
+    }
 
 }
