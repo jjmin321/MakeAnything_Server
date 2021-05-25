@@ -5,20 +5,15 @@ import jejeongmin.MakeAnything.item.domain.entity.Item;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class ItemDto {
 
     @NotNull
     private ItemType type;
-
-    @NotBlank
-    private User user;
 
     @NotBlank
     private String name;
@@ -32,7 +27,7 @@ public class ItemDto {
     @NotBlank
     private String thumbnail;
 
-    public Item toEntity() {
+    public Item toEntity(User user) {
         return Item.builder()
                 .type(type)
                 .user(user)
