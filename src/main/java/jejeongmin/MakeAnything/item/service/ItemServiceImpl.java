@@ -9,7 +9,6 @@ import jejeongmin.MakeAnything.item.domain.entity.Item;
 import jejeongmin.MakeAnything.item.domain.repository.ItemRepository;
 import jejeongmin.MakeAnything.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     private final File fileLib;
-    private final ModelMapper modelMapper;
     private final ItemRepository itemRepository;
 
     @Override
