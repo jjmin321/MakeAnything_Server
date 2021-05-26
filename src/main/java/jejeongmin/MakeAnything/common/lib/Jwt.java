@@ -71,17 +71,21 @@ public class Jwt {
     public User validateToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretAccessKey))
                 .parseClaimsJws(token).getBody();
-        return userRepository.findById((String) claims.get("id"));
+        Optional<User> user = userRepository.findById((String) claims.get("id"));
+        if (!user.isPresent()) {
+            throw new AuthorizationException("해당하는 유저 정보가 없음");
+        }
+        return user.get();
     }
 
     public String refresh(String refreshToken) {
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretRefreshKey))
                 .parseClaimsJws(refreshToken).getBody();
-        User user = userRepository.findById((String) claims.get("id"));
-        if (user == null) {
-            throw new AuthorizationException("유저 정보가 없음");
+        Optional<User> user = userRepository.findById((String) claims.get("id"));
+        if (!user.isPresent()) {
+            throw new AuthorizationException("해당하는 유저 정보가 없음");
         }
-        return createToken(user, JwtEnum.ACCESS);
+        return createToken(user.get(), JwtEnum.ACCESS);
     }
 
     public String extract(HttpServletRequest request, String type) {
