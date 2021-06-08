@@ -30,56 +30,56 @@ public class ItemController {
     @GetMapping("/getItem")
     public Response getItem(@RequestParam String name) {
         Item item = itemService.getItem(name);
-        return new ResponseData<Item>(HttpStatus.OK, "물품 정보 반환 성공", item);
+        return new ResponseData<>(HttpStatus.OK, "물품 정보 반환 성공", item);
     }
 
     @AutoLogging
     @GetMapping("/getAllItems")
     public Response getAllItems() {
         List<Item> items = itemService.getAllItems();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 기존 등록 순으로 정보 반환 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "전체 물품 기존 등록 순으로 정보 반환 성공", items);
     }
 
     @AutoLogging
     @GetMapping("/getAllItemsDesc")
     public Response getAllItemsDesc() {
         List<Item> items = itemService.getAllItemsDesc();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 최신 등록 순으로 반환 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "전체 물품 최신 등록 순으로 반환 성공", items);
     }
 
     @AutoLogging
     @GetMapping("/getAllItemsByPrice")
     public Response getAllItemsByPrice() {
         List<Item> items = itemService.getAllItemsByPrice();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 가격 낮은 순으로 반환 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "전체 물품 가격 낮은 순으로 반환 성공", items);
    }
 
    @AutoLogging
    @GetMapping("/getAllItemsByPriceDesc")
    public Response getAllItemsByPriceDesc() {
         List<Item> items = itemService.getAllItemsByPriceDesc();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "전체 물품 가격 높은 순으로 반환 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "전체 물품 가격 높은 순으로 반환 성공", items);
    }
 
    @AutoLogging
    @GetMapping("/getTalentItems")
    public Response getTalentItems() {
         List<Item> items = itemService.getTalentItems();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "재능 물품 최신 등록 순으로 반환 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "재능 물품 최신 등록 순으로 반환 성공", items);
    }
 
    @AutoLogging
    @GetMapping("/getUsedItems")
    public Response getUsedItems() {
         List<Item> items = itemService.getUsedItems();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "중고 물품 최신 등록 순으로 반환 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "중고 물품 최신 등록 순으로 반환 성공", items);
    }
 
    @AutoLogging
    @GetMapping("/getCustomItems")
    public Response getCustomItems() {
         List<Item> items = itemService.getCustomItems();
-        return new ResponseData<List<Item>>(HttpStatus.OK, "판매 요청 물품 최신 등록순으로 반환 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "판매 요청 물품 최신 등록순으로 반환 성공", items);
    }
 
 
@@ -87,7 +87,7 @@ public class ItemController {
     @GetMapping("/searchItems")
     public Response searchItems(@RequestParam String name) {
         List<Item> items = itemService.searchItems(name);
-        return new ResponseData<List<Item>>(HttpStatus.OK, "물품 정보 검색 성공", items);
+        return new ResponseData<>(HttpStatus.OK, "물품 정보 검색 성공", items);
     }
 
     @AutoLoggingWithUser
@@ -96,14 +96,14 @@ public class ItemController {
     public Response createItem(HttpServletRequest request, @Valid @RequestBody ItemDto itemDto) {
         User user = (User) request.getAttribute("user");
         Item createdItem = itemService.createItem(user, itemDto);
-        return new ResponseData<Item>(HttpStatus.OK, "물품 등록 성공", createdItem);
+        return new ResponseData<>(HttpStatus.OK, "물품 등록 성공", createdItem);
     }
 
     @AutoLogging
     @PostMapping("/uploadImage")
     public Response uploadImage(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         String fileName = itemService.uploadImage(file);
-        return new ResponseData<String>(HttpStatus.OK, "파일 업로드 성공", fileName);
+        return new ResponseData<>(HttpStatus.OK, "파일 업로드 성공", fileName);
     }
 
 }

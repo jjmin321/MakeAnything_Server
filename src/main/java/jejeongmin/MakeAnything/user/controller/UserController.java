@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping("/signIn")
     public Response signIn(@Valid @RequestBody UserDto userDto) throws IOException {
         Map<String, String> jsonWebToken = userService.signIn(userDto);
-        return new ResponseData<Map<String, String>>(HttpStatus.OK, "로그인 성공", jsonWebToken);
+        return new ResponseData<>(HttpStatus.OK, "로그인 성공", jsonWebToken);
     }
 
     @AutoLoggingWithUser
@@ -37,13 +37,13 @@ public class UserController {
     @GetMapping("/getInfo")
     public Response getInfo(HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
-        return new ResponseData<User>(HttpStatus.OK, "내 정보 조회 성공", user);
+        return new ResponseData<>(HttpStatus.OK, "내 정보 조회 성공", user);
     }
 
     @GetMapping("/token")
     public Response token(@RequestParam String refreshToken) {
         String accessToken = jwt.refresh(refreshToken);
-        return new ResponseData<String>(HttpStatus.OK, "토큰 갱신 성공", accessToken);
+        return new ResponseData<>(HttpStatus.OK, "토큰 갱신 성공", accessToken);
     }
 
 }
