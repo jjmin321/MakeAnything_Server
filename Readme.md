@@ -71,5 +71,3 @@ Controller는 클라이언트의 요청을 받고, Service는 요청의 비즈�
 DTO를 사용하여 계층 간 데이터를 교환할 수 있고, VO를 사용하여 객체를 정의하고 값을 사용합니다.
 
 ![image](https://user-images.githubusercontent.com/52072077/116331102-014e9a80-a80a-11eb-86e4-1a3fb129b7e6.png)
-
-# 2021년 5월 말 배포 예정으로 개발 중입니다 
