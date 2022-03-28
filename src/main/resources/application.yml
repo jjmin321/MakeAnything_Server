@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/MakeAnything?stringtype=unspecified
+    username: jejeongmin
+    password: qwerz123
+    driver-class-name: org.postgresql.Driver
+  servlet:
+    multipart:
+      max-file-size: 4MB
+  aop:
+    proxy-target-class: false # 클래스를 타겟으로 프록시를 만들 때 final이나 private이라면 제약이 있으므로 무조건 인터페이스로 고정
+
+dodam:
+  api-key: 5D52ADB445B0647C323FEB1941AF138ED1E251C30F330BE5E10041975EC9980D8327E5E1624D03900A61374313E9915B409D8578DF692AFB8FEF1B036573FB57
+
+jwt:
+  secret:
+    access: make_anything_jwt_secret_access_key
+    refresh: make_anything_jwt_secret_refresh_key
